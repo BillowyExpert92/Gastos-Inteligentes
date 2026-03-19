@@ -28,7 +28,9 @@
             <TextView
                 android:text="Presupuesto mensual"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:layout_height=""
+                android:layout_width="" />
 
             <TextView
                 android:id="@+id/txtPresupuesto"
@@ -36,7 +38,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="36sp"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:layout_height=""
+                android:layout_width="" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progreso"
@@ -59,7 +63,9 @@
                     android:text="Gastado: $2000"
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp"
+                    android:layout_height=""
+                    android:layout_width="" />
 
                 <TextView
                     android:id="@+id/txtDisponible"
@@ -67,7 +73,9 @@
                     android:textAlignment="viewEnd"
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp"
+                    android:layout_height=""
+                    android:layout_width="" />
 
             </LinearLayout>
 

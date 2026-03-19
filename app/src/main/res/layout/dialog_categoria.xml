@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Nombre -->
+        <EditText
+            android:id="@+id/etNombre"
+            android:hint="Nombre de la categoría"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+        <!-- Descripción -->
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:hint="Descripción"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="textMultiLine"/>
+
+        <!-- Texto color -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecciona un color"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"/>
+
+        <!-- Colores -->
+        <LinearLayout
+            android:id="@+id/layoutColores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <!-- Rojo -->
+            <View
+                android:id="@+id/colorRojo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_red_dark"
+                android:layout_margin="5dp"/>
+
+            <!-- Azul -->
+            <View
+                android:id="@+id/colorAzul"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_blue_dark"
+                android:layout_margin="5dp"/>
+
+            <!-- Verde -->
+            <View
+                android:id="@+id/colorVerde"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_green_dark"
+                android:layout_margin="5dp"/>
+
+            <!-- Amarillo -->
+            <View
+                android:id="@+id/colorAmarillo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_orange_light"
+                android:layout_margin="5dp"/>
+
+            <!-- Morado -->
+            <View
+                android:id="@+id/colorMorado"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_purple"
+                android:layout_margin="5dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
