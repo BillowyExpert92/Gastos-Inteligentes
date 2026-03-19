@@ -20,7 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PerfilFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PerfilFragment : Fragment() {
+class PerfilFragment : Fragment(R.layout.fragment_perfil) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_perfil, container, false)

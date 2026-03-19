@@ -22,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CategoriasFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CategoriasFragment : Fragment() {
+class CategoriasFragment : Fragment(R.layout.fragment_categorias) {
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: CategoriaAdapter

@@ -29,8 +29,8 @@
                 android:text="Presupuesto mensual"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
-                android:layout_height=""
-                android:layout_width="" />
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
 
             <TextView
                 android:id="@+id/txtPresupuesto"
@@ -39,8 +39,8 @@
                 android:textSize="36sp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
-                android:layout_height=""
-                android:layout_width="" />
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progreso"
@@ -64,8 +64,8 @@
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
                     android:textSize="13sp"
-                    android:layout_height=""
-                    android:layout_width="" />
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
 
                 <TextView
                     android:id="@+id/txtDisponible"
@@ -74,8 +74,8 @@
                     android:textColor="#FFFFFF"
                     android:layout_weight="1"
                     android:textSize="13sp"
-                    android:layout_height=""
-                    android:layout_width="" />
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" />
 
             </LinearLayout>
 
@@ -103,30 +103,44 @@
 
             <com.google.android.material.chip.Chip
                 android:text="Transporte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Comida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Entretenimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Escuela"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Servicios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Mercado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
             <com.google.android.material.chip.Chip
                 android:text="Otro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"/>
 
         </com.google.android.material.chip.ChipGroup>

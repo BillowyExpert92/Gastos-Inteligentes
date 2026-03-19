@@ -26,48 +26,40 @@ private const val ARG_PARAM2 = "param2"
  * Use the [InicioFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class InicioFragment : Fragment() {
+class InicioFragment : Fragment(R.layout.fragment_inicio) {
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: GastoAdaptador
 
     private var listaGastos = mutableListOf<Gasto>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        val view = inflater.inflate(R.layout.fragment_inicio, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById(R.id.listaGastos)
 
         adapter = GastoAdaptador(listaGastos)
 
-        recycler.layoutManager = LinearLayoutManager(context)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
 
         val btnAgregar = view.findViewById<FloatingActionButton>(R.id.btnAgregar)
 
         btnAgregar.setOnClickListener {
-
             mostrarDialogo()
-
         }
-
-        return view
     }
 
     private fun mostrarDialogo(){
 
-        val dialogView = LayoutInflater.from(context)
+        val dialogView = LayoutInflater.from(requireContext())
             .inflate(R.layout.dialog_agregar_gasto,null)
 
         val edtMonto = dialogView.findViewById<EditText>(R.id.edtMonto)
         val edtDescripcion = dialogView.findViewById<EditText>(R.id.edtDescripcion)
         val spinner = dialogView.findViewById<Spinner>(R.id.spinnerCategoria)
         val edtFecha = dialogView.findViewById<EditText>(R.id.edtFecha)
+        val btnGuardar = dialogView.findViewById<View>(R.id.btnGuardar)
 
         val categorias = listOf(
             "Transporte",
@@ -79,33 +71,48 @@ class InicioFragment : Fragment() {
             "Otro"
         )
 
-        spinner.adapter = ArrayAdapter(requireContext(),
+        spinner.adapter = ArrayAdapter(
+            requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            categorias)
+            categorias
+        )
 
         val hoy = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         edtFecha.setText(hoy)
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Agregar gasto")
+        val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
-            .setPositiveButton("Agregar"){_,_->
+            .create()
 
-                val gasto = Gasto(
+        dialog.show()
 
-                    edtDescripcion.text.toString(),
-                    edtMonto.text.toString().toDouble(),
-                    spinner.selectedItem.toString(),
-                    edtFecha.text.toString()
+        btnGuardar.setOnClickListener {
 
-                )
+            val monto = edtMonto.text.toString().toDoubleOrNull()
 
-                listaGastos.add(0,gasto)
-
-                adapter.notifyDataSetChanged()
-
+            if (monto == null) {
+                edtMonto.error = "Ingresa un monto válido"
+                return@setOnClickListener
             }
-            .show()
 
+            if (edtDescripcion.text.toString().isEmpty()) {
+                edtDescripcion.error = "Ingresa una descripción"
+                return@setOnClickListener
+            }
+
+            val gasto = Gasto(
+                edtDescripcion.text.toString(),
+                monto,
+                spinner.selectedItem.toString(),
+                edtFecha.text.toString()
+            )
+
+            listaGastos.add(0, gasto)
+            adapter.notifyItemInserted(0) // 🔥 mejor que notifyDataSetChanged()
+
+            recycler.scrollToPosition(0)
+
+            dialog.dismiss()
+        }
     }
 }

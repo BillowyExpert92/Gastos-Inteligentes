@@ -25,7 +25,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [EstadisticasFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EstadisticasFragment : Fragment() {
+class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
