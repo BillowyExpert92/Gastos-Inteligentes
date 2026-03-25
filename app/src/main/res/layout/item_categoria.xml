@@ -9,7 +9,15 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <!-- Línea de color superior -->
+        <View
+            android:id="@+id/lineaColor"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginBottom="6dp"/>
 
         <TextView
             android:id="@+id/txtNombre"

@@ -18,6 +18,7 @@ class CategoriaAdapter(
         val btnEditar: Button = view.findViewById(R.id.btnEditar)
         val btnEliminar: Button = view.findViewById(R.id.btnEliminar)
         val card: MaterialCardView = view as MaterialCardView
+        val lineaColor: View = view.findViewById(R.id.lineaColor)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +34,8 @@ class CategoriaAdapter(
 
         holder.nombre.text = categoria.nombre
         holder.descripcion.text = categoria.descripcion
-        holder.card.setCardBackgroundColor(categoria.color)
+        holder.lineaColor.setBackgroundColor(categoria.color)
+        holder.card.setCardBackgroundColor(android.graphics.Color.WHITE)
 
         holder.btnEliminar.setOnClickListener {
             lista.removeAt(position)
