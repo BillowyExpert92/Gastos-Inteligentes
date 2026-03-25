@@ -38,12 +38,14 @@
                 android:layout_gravity="center"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCorreo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correo"
                 app:startIconDrawable="@android:drawable/ic_dialog_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="45dp"
@@ -51,6 +53,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutContrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
@@ -59,6 +62,7 @@
                 app:startIconDrawable="@android:drawable/ic_lock_lock">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editContrasena"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="40dp"

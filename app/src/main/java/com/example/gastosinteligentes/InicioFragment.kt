@@ -108,7 +108,7 @@ class InicioFragment : Fragment(R.layout.fragment_inicio) {
             )
 
             listaGastos.add(0, gasto)
-            adapter.notifyItemInserted(0) // 🔥 mejor que notifyDataSetChanged()
+            adapter.notifyItemInserted(0)
 
             recycler.scrollToPosition(0)
 

@@ -38,18 +38,21 @@
                 android:layout_height="wrap_content"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombre"
                 android:hint="Nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@android:drawable/ic_menu_myplaces">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editNombre"
                     android:layout_width="match_parent"
                     android:paddingStart="45dp"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutCorreo"
                 android:hint="Correo"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -57,6 +60,7 @@
                 app:startIconDrawable="@android:drawable/ic_dialog_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCorreo"
                     android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:paddingStart="45dp"
@@ -64,6 +68,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutContrasena"
                 android:hint="Contraseña"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -72,6 +77,7 @@
                 app:startIconDrawable="@android:drawable/ic_lock_lock">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editContrasena"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:paddingStart="40dp"
@@ -79,6 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutConfirmarContrasena"
                 android:hint="Confirmar contraseña"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -87,6 +94,7 @@
                 app:startIconDrawable="@android:drawable/ic_lock_lock">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editConfirmarContrasena"
                     android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:paddingStart="40dp"
