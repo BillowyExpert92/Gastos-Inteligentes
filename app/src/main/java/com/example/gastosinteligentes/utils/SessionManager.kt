@@ -27,8 +27,7 @@ class SessionManager(context: Context) {
             -1
         )
     }
-
-    fun cerrarSesion(){
+    fun cerrarSesion() {
 
         prefs.edit()
             .clear()

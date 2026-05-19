@@ -14,6 +14,10 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.AdapterView
+
 class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var pieChart: PieChart
@@ -21,6 +25,8 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
     private lateinit var db: AppDatabase
 
     private var idUsuario = -1
+
+    private lateinit var spinnerMesAnio: Spinner
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,53 +39,70 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
         val session = SessionManager(requireContext())
         idUsuario = session.obtenerUsuarioId()
 
-        cargarEstadisticas()
+
+        spinnerMesAnio = view.findViewById(R.id.spinnerMesAnio)
+        configurarFiltroMesAnio()
     }
 
-    private fun cargarEstadisticas() {
+    private fun configurarFiltroMesAnio() {
         val gastos = db.appDao().obtenerGastosPorUsuario(idUsuario)
 
-        val gastosPorCategoria = mutableMapOf<String, Float>()
-        val coloresCategoria = mutableListOf<Int>()
-
-        val gastosPorMes = mutableMapOf<String, Float>()
-
         val formatoEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val formatoMes = SimpleDateFormat("MMM yyyy", Locale("es", "MX"))
+        formatoEntrada.isLenient = false
 
-        for (gasto in gastos) {
-            val categoria = db.appDao().obtenerCategoriaPorId(
-                gasto.id_categoria,
-                idUsuario
-            )
+        val formatoMes = SimpleDateFormat("MM/yyyy", Locale.getDefault())
 
-            val nombreCategoria = categoria?.nombre ?: "Sin categoría"
-
-            gastosPorCategoria[nombreCategoria] =
-                (gastosPorCategoria[nombreCategoria] ?: 0f) + gasto.monto.toFloat()
-
-            if (categoria != null && !coloresCategoria.contains(categoria.color)) {
-                coloresCategoria.add(categoria.color)
-            }
-
-            val fecha = try {
-                formatoEntrada.parse(gasto.fecha)
+        val meses = gastos.mapNotNull { gasto ->
+            try {
+                val fecha = formatoEntrada.parse(gasto.fecha)
+                fecha?.let { formatoMes.format(it) }
             } catch (e: Exception) {
                 null
             }
+        }.distinct()
 
-            val mes = if (fecha != null) {
-                formatoMes.format(fecha)
-            } else {
-                "Sin fecha"
-            }
-
-            gastosPorMes[mes] =
-                (gastosPorMes[mes] ?: 0f) + gasto.monto.toFloat()
+        if (meses.isEmpty()) {
+            cargarEstadisticas(emptyList())
+            return
         }
 
-        cargarPieChart(gastosPorCategoria, coloresCategoria)
-        cargarBarChart(gastosPorMes)
+        val adapterMeses = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            meses
+        )
+
+        adapterMeses.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        spinnerMesAnio.adapter = adapterMeses
+
+        spinnerMesAnio.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val mesSeleccionado = meses[position]
+
+                    val gastosFiltrados = gastos.filter { gasto ->
+                        try {
+                            val fecha = formatoEntrada.parse(gasto.fecha)
+                            fecha != null &&
+                                    formatoMes.format(fecha) == mesSeleccionado
+                        } catch (e: Exception) {
+                            false
+                        }
+                    }
+
+                    cargarEstadisticas(gastosFiltrados)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
     }
 
     private fun cargarPieChart(
@@ -126,5 +149,53 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
         barChart.axisRight.isEnabled = false
         barChart.invalidate()
+    }
+
+    private fun cargarEstadisticas(
+        gastos: List<com.example.gastosinteligentes.database.entidades.Gasto>
+    ) {
+        val gastosPorCategoria = mutableMapOf<String, Float>()
+        val coloresCategoria = mutableListOf<Int>()
+        val gastosPorMes = mutableMapOf<String, Float>()
+
+        val formatoEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        formatoEntrada.isLenient = false
+
+        val formatoMes = SimpleDateFormat("MM/yyyy", Locale.getDefault())
+
+        for (gasto in gastos) {
+            val categoria = db.appDao().obtenerCategoriaPorId(
+                gasto.id_categoria,
+                idUsuario
+            )
+
+            val nombreCategoria = categoria?.nombre ?: "Sin categoría"
+
+            gastosPorCategoria[nombreCategoria] =
+                (gastosPorCategoria[nombreCategoria] ?: 0f) +
+                        gasto.monto.toFloat()
+
+            if (categoria != null && !coloresCategoria.contains(categoria.color)) {
+                coloresCategoria.add(categoria.color)
+            }
+
+            val fecha = try {
+                formatoEntrada.parse(gasto.fecha)
+            } catch (e: Exception) {
+                null
+            }
+
+            val mes = if (fecha != null) {
+                formatoMes.format(fecha)
+            } else {
+                "Sin fecha"
+            }
+
+            gastosPorMes[mes] =
+                (gastosPorMes[mes] ?: 0f) + gasto.monto.toFloat()
+        }
+
+        cargarPieChart(gastosPorCategoria, coloresCategoria)
+        cargarBarChart(gastosPorMes)
     }
 }

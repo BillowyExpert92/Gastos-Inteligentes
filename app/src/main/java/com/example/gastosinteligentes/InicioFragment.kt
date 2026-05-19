@@ -33,6 +33,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
+import java.text.ParseException
+import java.util.Collections
 
 class InicioFragment : Fragment(R.layout.fragment_inicio) {
 
@@ -214,6 +216,15 @@ class InicioFragment : Fragment(R.layout.fragment_inicio) {
             listaOriginalGastos.add(gasto)
         }
 
+
+        listaGastos.sortByDescending {
+            convertirFecha(it.fecha)
+        }
+
+        listaOriginalGastos.sortByDescending {
+            convertirFecha(it.fecha)
+        }
+
         adapter.notifyDataSetChanged()
 
         actualizarCard()
@@ -349,6 +360,11 @@ class InicioFragment : Fragment(R.layout.fragment_inicio) {
 
             if (fecha.isEmpty()) {
                 edtFecha.error = "Ingresa una fecha"
+                return@setOnClickListener
+            }
+
+            if (!fechaValida(fecha)) {
+                edtFecha.error = "Formato inválido. Usa dd/mm/aaaa"
                 return@setOnClickListener
             }
 
@@ -601,5 +617,20 @@ class InicioFragment : Fragment(R.layout.fragment_inicio) {
         )
 
         itemTouchHelper.attachToRecyclerView(recycler)
+    }
+
+    private fun convertirFecha(fecha: String): Date? {
+        val formato = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        formato.isLenient = false
+
+        return try {
+            formato.parse(fecha)
+        } catch (e: ParseException) {
+            null
+        }
+    }
+
+    private fun fechaValida(fecha: String): Boolean {
+        return convertirFecha(fecha) != null
     }
 }

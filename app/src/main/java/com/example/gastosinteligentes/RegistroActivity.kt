@@ -12,6 +12,7 @@ import com.example.gastosinteligentes.database.entidades.Categoria
 import com.example.gastosinteligentes.database.entidades.Usuario
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.example.gastosinteligentes.utils.SessionManager
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -212,6 +213,13 @@ class RegistroActivity : AppCompatActivity() {
             val usuarioGuardado =
                 db.appDao()
                     .obtenerUsuarioPorCorreo(correo)
+
+
+            val session = SessionManager(this)
+
+            session.guardarUsuario(
+                usuarioGuardado!!.id
+            )
 
             // =====================================
             // CATEGORIAS BASE
