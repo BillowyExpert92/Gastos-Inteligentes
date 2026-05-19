@@ -99,51 +99,7 @@
             android:id="@+id/chipGroupCategorias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:singleSelection="true">
-
-            <com.google.android.material.chip.Chip
-                android:text="Transporte"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Comida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Entretenimiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Escuela"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Servicios"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Mercado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-            <com.google.android.material.chip.Chip
-                android:text="Otro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"/>
-
-        </com.google.android.material.chip.ChipGroup>
+            app:singleSelection="true"/>
 
     </HorizontalScrollView>
 
@@ -155,7 +111,9 @@
         android:layout_below="@id/filtroCategorias"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"/>
 
 
     <!-- BOTON AGREGAR -->
@@ -164,9 +122,11 @@
         android:id="@+id/btnAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:elevation="12dp"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="#000000"
         app:tint="#FFFFFF"/>

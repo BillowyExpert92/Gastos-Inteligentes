@@ -12,12 +12,15 @@ import com.example.gastosinteligentes.database.entidades.Usuario
 @Database(
     entities = [
         Usuario::class,
-        Gasto::class,
         Categoria::class,
+        Gasto::class,
         Presupuesto::class
     ],
-    version = 2
+
+    // SUBIR VERSION
+    version = 3
 )
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDAO
@@ -33,14 +36,19 @@ abstract class AppDatabase : RoomDatabase() {
 
             return INSTANCE ?: synchronized(this) {
 
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "gastos_db"
-                )
-                    .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
-                    .build()
+                val instance =
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "gastos_db"
+                    )
+
+                        // IMPORTANTE
+                        .fallbackToDestructiveMigration()
+
+                        .allowMainThreadQueries()
+
+                        .build()
 
                 INSTANCE = instance
 

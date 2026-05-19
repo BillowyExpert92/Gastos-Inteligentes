@@ -8,48 +8,67 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gastosinteligentes.database.AppDatabase
+import com.example.gastosinteligentes.utils.SessionManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_login)
 
         // BASE DE DATOS
 
         val db = AppDatabase.getDatabase(this)
 
+        // SESSION MANAGER
+
+        val session = SessionManager(this)
+
         // =========================
         // LAYOUTS
         // =========================
 
         val layoutCorreo =
-            findViewById<TextInputLayout>(R.id.layoutCorreo)
+            findViewById<TextInputLayout>(
+                R.id.layoutCorreo
+            )
 
         val layoutContrasena =
-            findViewById<TextInputLayout>(R.id.layoutContrasena)
+            findViewById<TextInputLayout>(
+                R.id.layoutContrasena
+            )
 
         // =========================
         // EDITTEXTS
         // =========================
 
         val editCorreo =
-            findViewById<TextInputEditText>(R.id.editCorreo)
+            findViewById<TextInputEditText>(
+                R.id.editCorreo
+            )
 
         val editContrasena =
-            findViewById<TextInputEditText>(R.id.editContrasena)
+            findViewById<TextInputEditText>(
+                R.id.editContrasena
+            )
 
         // =========================
         // BOTONES
         // =========================
 
         val btnLogin =
-            findViewById<Button>(R.id.btnLogin)
+            findViewById<Button>(
+                R.id.btnLogin
+            )
 
         val txtRegistro =
-            findViewById<TextView>(R.id.txtRegistro)
+            findViewById<TextView>(
+                R.id.txtRegistro
+            )
 
         // =========================
         // IR A REGISTRO
@@ -58,7 +77,10 @@ class LoginActivity : AppCompatActivity() {
         txtRegistro.setOnClickListener {
 
             startActivity(
-                Intent(this, RegistroActivity::class.java)
+                Intent(
+                    this,
+                    RegistroActivity::class.java
+                )
             )
         }
 
@@ -69,15 +91,21 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
 
             // LIMPIAR ERRORES
+
             layoutCorreo.error = null
             layoutContrasena.error = null
 
             // OBTENER DATOS
+
             val correo =
-                editCorreo.text.toString().trim()
+                editCorreo.text
+                    .toString()
+                    .trim()
 
             val contrasena =
-                editContrasena.text.toString().trim()
+                editContrasena.text
+                    .toString()
+                    .trim()
 
             // =========================
             // VALIDACIONES
@@ -86,6 +114,7 @@ class LoginActivity : AppCompatActivity() {
             var hayErrores = false
 
             // VALIDAR CORREO
+
             if(correo.isEmpty()){
 
                 layoutCorreo.error =
@@ -106,6 +135,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // VALIDAR CONTRASEÑA
+
             if(contrasena.isEmpty()){
 
                 layoutContrasena.error =
@@ -115,6 +145,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // DETENER SI HAY ERRORES
+
             if(hayErrores){
                 return@setOnClickListener
             }
@@ -145,6 +176,14 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // =========================
+            // GUARDAR SESION
+            // =========================
+
+            session.guardarUsuario(
+                usuario.id
+            )
+
+            // =========================
             // LOGIN EXITOSO
             // =========================
 
@@ -159,7 +198,10 @@ class LoginActivity : AppCompatActivity() {
             // =========================
 
             startActivity(
-                Intent(this, MainActivity::class.java)
+                Intent(
+                    this,
+                    MainActivity::class.java
+                )
             )
 
             finish()

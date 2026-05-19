@@ -24,5 +24,7 @@ data class Categoria(
 
     var descripcion: String = "",
 
+    var color: Int = 0,
+
     var id_usuario: Int = 0
 )

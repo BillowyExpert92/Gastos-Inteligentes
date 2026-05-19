@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
 }
 
 android {
@@ -49,7 +50,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     implementation ("androidx.room:room-runtime:2.6.1")
-    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     // Gráficas
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

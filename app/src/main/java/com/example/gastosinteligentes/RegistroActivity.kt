@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gastosinteligentes.database.AppDatabase
+import com.example.gastosinteligentes.database.entidades.Categoria
 import com.example.gastosinteligentes.database.entidades.Usuario
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -208,6 +209,58 @@ class RegistroActivity : AppCompatActivity() {
             // =========================
 
             db.appDao().insertarUsuario(usuario)
+            val usuarioGuardado =
+                db.appDao()
+                    .obtenerUsuarioPorCorreo(correo)
+
+            // =====================================
+            // CATEGORIAS BASE
+            // =====================================
+
+            db.appDao().insertarCategoria(
+                com.example.gastosinteligentes.database.entidades.Categoria(
+                    nombre = "Comida",
+                    descripcion = "Gastos de comida",
+                    color = android.graphics.Color.RED,
+                    id_usuario = usuarioGuardado!!.id
+                )
+            )
+
+            db.appDao().insertarCategoria(
+                com.example.gastosinteligentes.database.entidades.Categoria(
+                    nombre = "Transporte",
+                    descripcion = "Pasajes y gasolina",
+                    color = android.graphics.Color.BLUE,
+                    id_usuario = usuarioGuardado.id
+                )
+            )
+
+            db.appDao().insertarCategoria(
+                com.example.gastosinteligentes.database.entidades.Categoria(
+                    nombre = "Mercado",
+                    descripcion = "Supermercado",
+                    color = android.graphics.Color.GREEN,
+                    id_usuario = usuarioGuardado.id
+                )
+            )
+
+            db.appDao().insertarCategoria(
+                com.example.gastosinteligentes.database.entidades.Categoria(
+                    nombre = "Hogar",
+                    descripcion = "Servicios y casa",
+                    color = android.graphics.Color.YELLOW,
+                    id_usuario = usuarioGuardado.id
+                )
+            )
+
+            db.appDao().insertarCategoria(
+                Categoria(
+                    nombre = "Escuela",
+                    descripcion = "Gastos escolares",
+                    color = android.graphics.Color.CYAN,
+                    id_usuario = usuarioGuardado.id
+                )
+            )
 
             // =========================
             // MENSAJE

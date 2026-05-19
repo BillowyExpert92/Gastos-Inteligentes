@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 class GastoAdaptador(private val lista:MutableList<Gasto>) :
     RecyclerView.Adapter<GastoAdaptador.ViewHolder>() {
 
-    class ViewHolder(view: View):RecyclerView.ViewHolder(view){
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
         val descripcion: TextView = view.findViewById(R.id.txtDescripcion)
-        val monto:TextView = view.findViewById(R.id.txtMonto)
-        val categoria:TextView = view.findViewById(R.id.txtCategoria)
-        val fecha:TextView = view.findViewById(R.id.txtFecha)
-
+        val monto: TextView = view.findViewById(R.id.txtMonto)
+        val categoria: TextView = view.findViewById(R.id.txtCategoria)
+        val fecha: TextView = view.findViewById(R.id.txtFecha)
+        val lineaColorCategoria: View = view.findViewById(R.id.lineaColorCategoria)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,5 +36,6 @@ class GastoAdaptador(private val lista:MutableList<Gasto>) :
         holder.monto.text = "$${gasto.monto}"
         holder.categoria.text = gasto.categoria
         holder.fecha.text = gasto.fecha
+        holder.lineaColorCategoria.setBackgroundColor(gasto.colorCategoria)
     }
 }

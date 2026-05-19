@@ -35,50 +35,126 @@
             android:textStyle="bold"/>
 
         <!-- Colores -->
-        <LinearLayout
-            android:id="@+id/layoutColores"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:scrollbars="none">
 
-            <View
-                android:id="@+id/colorRojo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/holo_red_dark"
-                android:layout_margin="5dp"/>
+            <LinearLayout
+                android:id="@+id/layoutColores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <View
-                android:id="@+id/colorAzul"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/holo_blue_dark"
-                android:layout_margin="5dp"/>
+                <View
+                    android:id="@+id/colorRojo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/holo_red_dark"/>
 
-            <View
-                android:id="@+id/colorVerde"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/holo_green_dark"
-                android:layout_margin="5dp"/>
+                <View
+                    android:id="@+id/colorAzul"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/holo_blue_dark"/>
 
-            <View
-                android:id="@+id/colorAmarillo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/holo_orange_light"
-                android:layout_margin="5dp"/>
+                <View
+                    android:id="@+id/colorVerde"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/holo_green_dark"/>
 
-            <View
-                android:id="@+id/colorMorado"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/holo_purple"
-                android:layout_margin="5dp"/>
+                <View
+                    android:id="@+id/colorAmarillo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/holo_orange_light"/>
 
-        </LinearLayout>
+                <View
+                    android:id="@+id/colorMorado"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="@android:color/holo_purple"/>
+
+                <View
+                    android:id="@+id/colorNaranja"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#FF9800"/>
+
+                <View
+                    android:id="@+id/colorRosa"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#E91E63"/>
+
+                <View
+                    android:id="@+id/colorCafe"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#795548"/>
+
+                <View
+                    android:id="@+id/colorGris"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#606060"/>
+
+                <View
+                    android:id="@+id/colorNegro"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#000000"/>
+
+                <View
+                    android:id="@+id/colorTurquesa"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#00BCD4"/>
+
+                <View
+                    android:id="@+id/colorLima"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#CDDC39"/>
+
+                <View
+                    android:id="@+id/colorIndigo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#3F51B5"/>
+
+                <View
+                    android:id="@+id/colorVerdeOscuro"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#2E7D32"/>
+
+                <View
+                    android:id="@+id/colorAzulClaro"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:background="#03A9F4"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
         <Button
             android:id="@+id/btnGuardarCategoria"

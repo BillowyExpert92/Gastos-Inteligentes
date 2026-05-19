@@ -1,99 +1,130 @@
 package com.example.gastosinteligentes
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.gastosinteligentes.database.AppDatabase
+import com.example.gastosinteligentes.utils.SessionManager
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EstadisticasFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
+    private lateinit var db: AppDatabase
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_estadisticas, container, false)
-    }
+    private var idUsuario = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         pieChart = view.findViewById(R.id.pieChart)
         barChart = view.findViewById(R.id.barChart)
 
-        val datos = obtenerDatosGastos()
+        db = AppDatabase.getDatabase(requireContext())
 
-        cargarPieChart(datos.first)
-        cargarBarChart(datos.second)
+        val session = SessionManager(requireContext())
+        idUsuario = session.obtenerUsuarioId()
+
+        cargarEstadisticas()
     }
 
-    private fun obtenerDatosGastos(): Pair<List<Pair<String, Float>>, List<Pair<String, Float>>> {
+    private fun cargarEstadisticas() {
+        val gastos = db.appDao().obtenerGastosPorUsuario(idUsuario)
 
-        // Aquí deberías recibir datos reales desde BD/API
+        val gastosPorCategoria = mutableMapOf<String, Float>()
+        val coloresCategoria = mutableListOf<Int>()
 
-        val hayDatos = false
+        val gastosPorMes = mutableMapOf<String, Float>()
 
-        return if (hayDatos) {
-            Pair(listOf(), listOf())
-        } else {
-            // DATOS DUMMY
-            Pair(
-                listOf(
-                    "Comida" to 300f,
-                    "Transporte" to 150f,
-                    "Mercado" to 200f,
-                    "Hogar" to 100f,
-                    "Escuela" to 80f
-                ),
-                listOf(
-                    "Enero" to 500f,
-                    "Febrero" to 700f,
-                    "Marzo" to 650f
-                )
+        val formatoEntrada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formatoMes = SimpleDateFormat("MMM yyyy", Locale("es", "MX"))
+
+        for (gasto in gastos) {
+            val categoria = db.appDao().obtenerCategoriaPorId(
+                gasto.id_categoria,
+                idUsuario
             )
+
+            val nombreCategoria = categoria?.nombre ?: "Sin categoría"
+
+            gastosPorCategoria[nombreCategoria] =
+                (gastosPorCategoria[nombreCategoria] ?: 0f) + gasto.monto.toFloat()
+
+            if (categoria != null && !coloresCategoria.contains(categoria.color)) {
+                coloresCategoria.add(categoria.color)
+            }
+
+            val fecha = try {
+                formatoEntrada.parse(gasto.fecha)
+            } catch (e: Exception) {
+                null
+            }
+
+            val mes = if (fecha != null) {
+                formatoMes.format(fecha)
+            } else {
+                "Sin fecha"
+            }
+
+            gastosPorMes[mes] =
+                (gastosPorMes[mes] ?: 0f) + gasto.monto.toFloat()
         }
+
+        cargarPieChart(gastosPorCategoria, coloresCategoria)
+        cargarBarChart(gastosPorMes)
     }
 
-    private fun cargarPieChart(data: List<Pair<String, Float>>) {
-
-        val entries = data.map {
-            PieEntry(it.second, it.first)
+    private fun cargarPieChart(
+        datos: Map<String, Float>,
+        colores: List<Int>
+    ) {
+        val entries = datos.map {
+            PieEntry(it.value, it.key)
         }
 
-        val dataSet = PieDataSet(entries, "Gastos")
-        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        val dataSet = PieDataSet(entries, "Gastos por categoría")
+
+        dataSet.colors =
+            if (colores.isNotEmpty()) colores
+            else listOf(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW)
+
+        dataSet.valueTextSize = 12f
+        dataSet.valueTextColor = Color.BLACK
 
         pieChart.data = PieData(dataSet)
+        pieChart.description.isEnabled = false
+        pieChart.centerText = "Categorías"
+        pieChart.setUsePercentValues(false)
         pieChart.invalidate()
     }
 
-    private fun cargarBarChart(data: List<Pair<String, Float>>) {
+    private fun cargarBarChart(datos: Map<String, Float>) {
+        val labels = datos.keys.toList()
 
-        val entries = data.mapIndexed { index, pair ->
-            BarEntry(index.toFloat(), pair.second)
+        val entries = datos.values.mapIndexed { index, monto ->
+            BarEntry(index.toFloat(), monto)
         }
 
-        val dataSet = BarDataSet(entries, "Mensual")
+        val dataSet = BarDataSet(entries, "Gastos por mes")
+        dataSet.valueTextSize = 12f
 
         barChart.data = BarData(dataSet)
+        barChart.description.isEnabled = false
+
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        barChart.xAxis.granularity = 1f
+        barChart.xAxis.setDrawGridLines(false)
+
+        barChart.axisRight.isEnabled = false
         barChart.invalidate()
     }
 }
